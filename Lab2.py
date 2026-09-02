@@ -11,7 +11,7 @@ summary_option = st.sidebar.selectbox(
 )
 
 if st.sidebar.checkbox("Use advanced model"):
-    selected_model = "gpt-5.4-pro" 
+    selected_model = "gpt-5.4-mini" 
 else:
     selected_model = "gpt-5.4-nano"
 
@@ -44,11 +44,10 @@ else:
             document = uploaded_file.read().decode()
         elif file_extension == 'pdf':
             document = read_pdf(uploaded_file)
-        doc = document.read().decode()
         messages = [
             {
                 "role": "user",
-                "content": f"Here's a document: {doc} \n\n---\n\n Summarize the document in {summary_option}",
+                "content": f"Here's a document: {document} \n\n---\n\n Summarize the document in {summary_option}",
             }
         ]
 
