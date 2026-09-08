@@ -3,11 +3,7 @@ from openai import OpenAI
 
 st.title("Lab 3")
 
-system_prompt = {'role': 'system', 'content': ("You are a helpful assistant."
-    "Your job is to get a user's question, answer it, then ask if the user wants more info afterwards."
-    "If the user says yes, provide more information and then ask again if they want more info."
-    "If the user says no, go back to asking what you can help with."
-    "Make sure you give your answers in a manner that a 10 year old can understand.")}
+system_prompt = {'role': 'system', 'content': ("You are a helpful assistant. Your job is to get a user's question, answer it, then ask if the user wants more info afterwards. If the user says yes, provide more information and then ask again if they want more info. If the user says no, go back to asking what you can help with. Make sure you give your answers in a manner that a 10 year old can understand.")}
 
 model = st.sidebar.selectbox('Which model?', ('mini', 'nano'))
 
