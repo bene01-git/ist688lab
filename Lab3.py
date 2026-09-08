@@ -1,6 +1,5 @@
 import streamlit as st
 from openai import OpenAI
-import tiktoken
 
 st.title("Lab 3")
 
@@ -11,7 +10,6 @@ system_prompt = {'role': 'system', 'content': ("You are a helpful assistant."
     "Make sure you give your answers in a manner that a 10 year old can understand.")}
 
 model = st.sidebar.selectbox('Which model?', ('mini', 'nano'))
-max_tokens = st.sidebar.slider('max_tokens (token buffer)', 500, 4000, 2000, 100)
 
 if model == "mini":
     model_to_use = "gpt-5-mini"
@@ -38,17 +36,7 @@ if prompt := st.chat_input("What's up?"):
 
     recent_messages = st.session_state.messages[-4:]
 
-    max_tokens = 500
-    encoding = tiktoken.get_encoding("cl100k_base")
-    recent_messages = []
-    current_tokens = 0
-    
-    for msg in reversed(st.session_state.messages):
-        msg_tokens = len(encoding.encode(msg['content']))
-        if current_tokens + msg_tokens > max_tokens:
-            break
-        recent_messages.insert(0, msg)
-        current_tokens += msg_tokens
+    api_messages = [system_prompt] + recent_messages
 
     client = st.session_state.client
     stream = client.chat.completions.create(
@@ -57,19 +45,10 @@ if prompt := st.chat_input("What's up?"):
         stream=True
     )
 
-    with st.chat_message('assistant'):
-        response = st.write_stream(stream)
-
-    st.session_state.messages.append({'role': 'assistant', 'content': response})
-
-    completion = client.chat.completions.create(
+    stream = client.chat.completions.create(
         model=model_to_use,
         messages = [
-            {'role': 'system', 'content': ("You are a helpful assistant."
-            "Your job is to get a user's question, answer it, then ask if the user wants more info afterwards."
-            "If the user says yes, provide more information and then ask again if they want more info."
-            "If the user says no, go back to asking what you can help with."
-            "Make sure you give your answers in a manner that a 10 year old can understand.")},
+            {'role': 'system', 'content': system_prompt},
             {'role': 'user', 'content': 'message 1 content.'},
             {'role': 'assistant', 'content': 'message 2 content.'},
             {'role': 'user', 'content': 'message 3 content.'},
@@ -77,3 +56,7 @@ if prompt := st.chat_input("What's up?"):
         ]
     )
 
+    with st.chat_message('assistant'):
+        response = st.write_stream(stream)
+
+    st.session_state.messages.append({'role': 'assistant', 'content': response})
