@@ -37,13 +37,7 @@ if prompt := st.chat_input("What's up?"):
     client = st.session_state.client
     stream = client.chat.completions.create(
         model=model_to_use,
-        messages = [
-            {'role': 'system', 'content': system_prompt},
-            {'role': 'user', 'content': 'message 1 content.'},
-            {'role': 'assistant', 'content': 'message 2 content.'},
-            {'role': 'user', 'content': 'message 3 content.'},
-            {'role': 'assistant', 'content': 'message 4 content.'}
-        ],
+        messages = api_messages,
         stream=True
     )
 
