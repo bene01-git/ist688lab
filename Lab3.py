@@ -37,7 +37,7 @@ if prompt := st.chat_input("What's up?"):
     client = st.session_state.client
     stream = client.chat.completions.create(
         model=model_to_use,
-        messages = api_messages,
+        messages=api_messages,
         stream=True
     )
 
