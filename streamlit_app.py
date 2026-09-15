@@ -9,6 +9,6 @@ page2 = st.Page('Lab2.py', title="Lab 2")
 page3 = st.Page('Lab3.py', title="Lab 3")
 page4 = st.Page('Lab4.py', title="Lab 4", default=True)
 
-pg = st.navigation([page1, page2, page3])
+pg = st.navigation([page1, page2, page3, page4])
 st.set_page_config(page_title="Labs")
 pg.run()
