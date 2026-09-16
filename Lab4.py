@@ -59,6 +59,8 @@ if 'Lab4_VectorDB' not in st.session_state:
     if collection.count() == 0:
         loaded = load_pdfs_to_collection('./Lab-04-Data/', collection)
 
+    st.session_state.Lab4_VectorDB = collection
+
 collection = st.session_state.Lab4_VectorDB
 
 model = st.sidebar.selectbox('Which model?', ('mini', 'nano'))
