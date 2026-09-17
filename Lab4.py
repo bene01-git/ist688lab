@@ -22,7 +22,7 @@ def add_to_collection(collection, text, file_name):
     # Create embedding
     client = st.session_state.openai_client
     response = client.embeddings.create(
-        imput=text,
+        input=text,
         model='text-embedding-3-small'
     )
 
