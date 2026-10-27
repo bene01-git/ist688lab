@@ -71,7 +71,7 @@ if st.button("Get Advice"):
 
         # First API call to trigger the tool
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-5-mini",
             messages=messages,
             tools=tools,
             tool_choice="auto"
