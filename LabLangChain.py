@@ -5,8 +5,6 @@ import requests
 import json
 from langchain.agents import create_agent
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
 # location can be a city, a zip code, an airport code ('SYR'),
 # or a landmark ('Eiffel+Tower')
 # note: hard codes units to degrees Fahrenheit
