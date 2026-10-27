@@ -52,7 +52,7 @@ agent = create_agent(
 
 if st.button("Get Advice"):
     result = agent.invoke(
-        {"messages": [{"role": "user", "content": f"What should I wear in {location}?"}]}
+        {"messages": [{"role": "user", "content": f"What should I wear in {location_input}?"}]}
     )
 
     with st.chat_message("assistant"):
