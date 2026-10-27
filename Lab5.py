@@ -105,7 +105,7 @@ if st.button("Get Advice"):
             
             # Second call to the API to generate the final advice using the weather data
             second_response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-5-mini",
                 messages=messages
             )
             
