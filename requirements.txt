@@ -5,4 +5,5 @@ chromadb
 pysqlite3-binary
 protobuf==3.20
 pathlib
-
+langchain
+langchain-openai
