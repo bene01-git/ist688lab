@@ -134,7 +134,7 @@ def save_memory(collection, user_id: str, text: str) -> str:
     metadatas=[{"user_id": user_id,
                 "timestamp": time.time(),
                 "date": datetime.now().strftime("%Y-%m-%d"),
-                "type": memory_type(text)}]
+                "type": memory_type(text)}])
     return memory_id
 
 
@@ -150,6 +150,15 @@ def recall_memories(collection, user_id: str, query: str, k: int = RECALL_K):
     if collection.count() == 0:
         return []
     results = collection.query(query_texts=[query], n_results=k, where=where)
+    memories = []
+    if results and results['documents'] and results['documents'][0]:
+        for i in range(len(results['documents'][0])):
+            memories.append({
+                "text": results['documents'][0][i],
+                "type": results['metadatas'][0][i]["type"],
+                "date": results['metadatas'][0][i]["date"]
+            })
+    return memories
 
 
 def forget_user(collection, user_id: str) -> bool:
@@ -171,8 +180,7 @@ def build_system_prompt(memories, memory_on: bool) -> str:
         block += f"- [{m['type']}, saved {m['date']}] {m['text']}\n"
     return SYSTEM_PROMPT + block # Lab 3 rules stay first
 
-# system prompt first, then the Lab 3 buffer (last 2 exchanges)
-messages_to_send = ([{"role": "system", "content": system_prompt}] + buffered_messages)
+
 
 
 # =====================================================================
